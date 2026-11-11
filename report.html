@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fingerprint Inspector</title>
+  <link rel="stylesheet" href="report.css">
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <div class="brand">
+        <img src="icons/icon48.png" alt="" width="32" height="32">
+        <div>
+          <h1>Fingerprint Inspector</h1>
+          <p class="sub">What a tracking script can learn about your browser without asking.</p>
+        </div>
+      </div>
+      <div class="controls">
+        <label class="source">
+          <span>Collect from</span>
+          <select id="source"></select>
+        </label>
+        <button id="recollect" type="button">Re-collect</button>
+        <button id="copy" type="button" class="secondary">Copy JSON</button>
+        <button id="download" type="button" class="secondary">Download</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="summary" id="summary" aria-live="polite">
+      <div class="stat id-stat">
+        <span class="stat-label">Combined fingerprint ID</span>
+        <code id="fp-id" class="fp-id">collecting…</code>
+        <span class="stat-note" id="fp-id-note"></span>
+      </div>
+      <div class="stat"><span class="stat-label">Attributes</span><span class="stat-value" id="stat-count">–</span></div>
+      <div class="stat"><span class="stat-label">High-entropy</span><span class="stat-value" id="stat-high">–</span></div>
+      <div class="stat"><span class="stat-label">Randomized / noised</span><span class="stat-value" id="stat-noise">–</span></div>
+      <div class="stat"><span class="stat-label">Collected in</span><span class="stat-value small" id="stat-time">–</span></div>
+    </section>
+
+    <div class="notice" id="notice" hidden></div>
+
+    <div class="toolbar">
+      <input id="filter" type="search" placeholder="Filter attributes (e.g. webgl, font, timezone)…" autocomplete="off">
+      <div class="legend">
+        <span class="badge high">high</span>
+        <span class="badge medium">medium</span>
+        <span class="badge low">low</span>
+        <span class="legend-text">identifying power</span>
+        <span class="badge volatile">volatile</span>
+        <span class="legend-text">not in combined ID</span>
+      </div>
+    </div>
+
+    <nav class="toc" id="toc"></nav>
+
+    <div id="sections"></div>
+
+    <section class="section invisible">
+      <h2>Not visible to JavaScript</h2>
+      <p class="blurb">Trackers and bot-detection services also fingerprint you at the network layer. No extension or page script can read these, but servers see them on every request.</p>
+      <dl id="invisible"></dl>
+    </section>
+
+    <footer>
+      <p>All collection happens locally. Nothing leaves your browser. The combined ID is a non-cryptographic hash (cyrb53) of the stable attributes and only identifies this browser on this machine for comparison purposes.</p>
+    </footer>
+  </main>
+
+  <script src="explanations.js"></script>
+  <script src="collector.js"></script>
+  <script src="report.js"></script>
+</body>
+</html>
